@@ -42,10 +42,10 @@ void setup() {
 
 void loop() {
   // Some example procedures showing how to display to the pixels:
-  colorWipe(strip.Color(255, 0, 0), 100); // Red
-  theaterChase(strip.Color(255,0,0), 100);
-  theaterChase(strip.Color(0,255,0), 100);
-  colorWipe(strip.Color(0, 255, 0), 100); // Green
+  colorWipe(strip.Color(255, 0, 0), 1000); // Red
+  theaterChase(strip.Color(255,0,0), 1000);
+  theaterChase(strip.Color(0,255,0), 1000);
+  colorWipe(strip.Color(0, 255, 0), 1000); // Green
  
 }
 
