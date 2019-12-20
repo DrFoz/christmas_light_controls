@@ -1,20 +1,29 @@
-/***************************************************
-  Adafruit MQTT Library ESP8266 Example
+#include <Adafruit_NeoPixel.h>
 
-  Must use ESP8266 Arduino from:
-    https://github.com/esp8266/Arduino
+//**************************************************
+// Which pin on the Arduino is connected to the NeoPixels?
+// On a Trinket or Gemma we suggest changing this to 1:
+#define LED_PIN    2
+ 
+// How many NeoPixels are attached to the Arduino?
+#define LED_COUNT 17
+ 
+// Declare our NeoPixel strip object:
+Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ400);
+// Argument 1 = Number of pixels in NeoPixel strip
+// Argument 2 = Arduino pin number (most are valid)
+// Argument 3 = Pixel type flags, add together as needed:
+//   NEO_KHZ800  800 KHz bitstream (most NeoPixel products w/WS2812 LEDs)
+//   NEO_KHZ400  400 KHz (classic 'v1' (not v2) FLORA pixels, WS2811 drivers)
+//   NEO_GRB     Pixels are wired for GRB bitstream (most NeoPixel products)
+//   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
+//   NEO_RGBW    Pixels are wired for RGBW bitstream (NeoPixel RGBW products)
 
-  Works great with Adafruit's Huzzah ESP board & Feather
-  ----> https://www.adafruit.com/product/2471
-  ----> https://www.adafruit.com/products/2821
+/*****************  NEEDED TO MAKE NODEMCU WORK ***************************/
+#define FASTLED_INTERRUPT_RETRY_COUNT 0
+#define FASTLED_ESP8266_RAW_PIN_ORDER
 
-  Adafruit invests time and resources providing this open source code,
-  please support Adafruit and open-source hardware by purchasing
-  products from Adafruit!
 
-  Written by Tony DiCola for Adafruit Industries.
-  MIT license, all text above must be included in any redistribution
- ****************************************************/
 #include <ESP8266WiFi.h>
 #include "Adafruit_MQTT.h"
 #include "Adafruit_MQTT_Client.h"
@@ -60,7 +69,10 @@ void setup() {
   Serial.begin(115200);
   delay(10);
 
-  Serial.println(F("Adafruit MQTT demo"));
+  //LED Strip setup
+  strip.begin();
+  strip.show(); // Initialize all pixels to 'off'
+
 
   // Connect to WiFi access point.
   Serial.println(); Serial.println();
@@ -75,7 +87,8 @@ void setup() {
   Serial.println();
 
   Serial.println("WiFi connected");
-  Serial.println("IP address: "); Serial.println(WiFi.localIP());
+  Serial.println("IP address: "); 
+  Serial.println(WiFi.localIP());
 
   // Setup MQTT subscription for xmaslights feed.
   mqtt.subscribe(&rgbpixel);
@@ -89,6 +102,17 @@ void loop() {
   // function definition further below.
   MQTT_connect();
 
+  colorWipe(strip.Color(255, 0, 0), 50); // Red
+  colorWipe(strip.Color(0, 255, 0), 50); // Green
+  colorWipe(strip.Color(0, 0, 255), 50); // Blue
+  // Send a theater pixel chase in...
+  theaterChase(strip.Color(127, 127, 127), 50); // White
+  theaterChase(strip.Color(127, 0, 0), 50); // Red
+  theaterChase(strip.Color(0, 0, 127), 50); // Blue
+
+  rainbow(20);
+  rainbowCycle(20);
+  theaterChaseRainbow(50);
   // this is our 'wait for incoming subscription packets' busy subloop
   // try to spend your time here
 
