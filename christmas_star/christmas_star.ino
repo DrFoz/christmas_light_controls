@@ -19,7 +19,7 @@ FASTLED_USING_NAMESPACE
 #define DATA_PIN    3
 //#define CLK_PIN   4
 #define LED_TYPE    WS2811
-#define COLOR_ORDER GRB
+#define COLOR_ORDER RGB
 #define NUM_LEDS    17
 CRGB leds[NUM_LEDS];
 
@@ -50,9 +50,9 @@ void loop()
   // Call the current pattern function once, updating the 'leds' array
   //rainbow();
   confetti();
-  rainbowWithGlitter();
-  bpm();
-  juggle();
+  //rainbowWithGlitter();
+  //bpm();
+  //juggle();
   // send the 'leds' array out to the actual LED strip
   FastLED.show();  
   // insert a delay to keep the framerate modest
