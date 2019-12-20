@@ -49,10 +49,10 @@ void loop()
 {
   // Call the current pattern function once, updating the 'leds' array
   //rainbow();
-  //confetti();
-  //rainbowWithGlitter();
-  //bpm();
-  //juggle();
+  confetti();
+  rainbowWithGlitter();
+  bpm();
+  juggle();
   // send the 'leds' array out to the actual LED strip
   FastLED.show();  
   // insert a delay to keep the framerate modest
