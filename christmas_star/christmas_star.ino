@@ -2,14 +2,15 @@
 
 FASTLED_USING_NAMESPACE
 
-// FastLED "100-lines-of-code" demo reel, showing just a few 
-// of the kinds of animation patterns you can quickly and easily 
-// compose using FastLED.  
-//
-// This example also shows one easy way to define multiple 
-// animations patterns and have them automatically rotate.
-//
-// -Mark Kriegsman, December 2014
+/*
+ * Christmas star made up of 130 RGB LED pixels
+ * CAT5e cable connects to pixels
+ * WS2811 12v
+ * W/O + W/G - VCC
+ * O/W + G/W - GND
+ * W/B - Data pin
+ * B/W - Ground to microprocessor
+ */
 
 #if FASTLED_VERSION < 3001000
 #error "Requires FastLED 3.1 or later; check github for latest code."
