@@ -21,7 +21,7 @@ FASTLED_USING_NAMESPACE
 #define LED_TYPE    WS2811
 
 #define COLOR_ORDER RGB
-#define NUM_LEDS    44
+#define NUM_LEDS    17
 
 CRGB leds[NUM_LEDS];
 
@@ -42,7 +42,7 @@ void setup() {
 
 // List of patterns to cycle through.  Each is defined as a separate function below.
 typedef void (*SimplePatternList[])();
-SimplePatternList gPatterns = {sinelonG, sinelonR };
+SimplePatternList gPatterns = {bpm};
 
 uint8_t gCurrentPatternNumber = 0; // Index number of which pattern is current
 uint8_t gHue = 0; // rotating "base color" used by many of the patterns
