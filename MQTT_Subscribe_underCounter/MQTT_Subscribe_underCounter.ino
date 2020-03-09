@@ -6,9 +6,13 @@
 #include <ESP8266WiFi.h> // Enables the ESP8266 to connect to the local network (via WiFi)
 #include <PubSubClient.h> // Allows us to connect to, and publish to the MQTT broker
 
-const int ledPin = 16; // This code uses the built-in led for visual feedback that a message has been received
-const int blueled = 5;
-const int greenled = 4;
+const int redLed = 5; // This code uses the built-in led for visual feedback that a message has been received
+const int blueLed = 4;
+uint8_t greenLed = 0;
+
+
+
+
 // WiFi
 // Make sure to update this for your own WiFi network!
 const char* ssid = "bridgednet";
@@ -29,28 +33,82 @@ PubSubClient client(mqtt_server, 1883, wifiClient); // 1883 is the listener port
 
 void ReceivedMessage(char* topic, byte* payload, unsigned int length) {
   // Output the first character of the message to serial (debug)
-  Serial.println((char)payload[0]);
+  //Serial.println((char)payload[0]);
+  //Serial.println((char)payload[1]);
+
+ if ((char)payload[0] == '0') {
+    analogWrite(greenLed, 0); // Turn the LED on (Note that LOW is the voltage level
+    Serial.println("Value at 0");
+    }
+
+     if ((char)payload[0] == '1') {
+    analogWrite(greenLed, 16);   // Turn the LED on (Note that LOW is the voltage level
+    Serial.println("Value at 16");
+    
+    }
+
+     if ((char)payload[0] == '2') {
+    analogWrite(greenLed, 32);   // Turn the LED on (Note that LOW is the voltage level
+    Serial.println("Value at 32");
+    }
+
+     if ((char)payload[0] == '3') {
+    analogWrite(greenLed, 64);   // Turn the LED on (Note that LOW is the voltage level
+    Serial.println("Value at 64");
+    }
+
+if ((char)payload[0] == '4') {
+    analogWrite(greenLed, 128);   // Turn the LED on (Note that LOW is the voltage level
+    Serial.println("Value at 128");
+    }
+
+    if ((char)payload[0] == '5') {
+    analogWrite(greenLed, 255);   // Turn the LED on (Note that LOW is the voltage level
+    Serial.println("Value at 255");
+    }
+
+    
+  
 
   // Handle the message we received
   // Here, we are only looking at the first character of the received message (payload[0])
   // If it is 0, turn the led off.
   // If it is 1, turn the led on.
-  if ((char)payload[0] == '0') {
-    digitalWrite(ledPin, LOW); // Notice for the HUZZAH Pin 0, HIGH is OFF and LOW is ON. Normally it is the other way around.
+  /*if ((char)payload[0] == '1') {
+    Serial.println("red led on");
+    digitalWrite(redLed, LOW); // Notice for the HUZZAH Pin 0, HIGH is OFF and LOW is ON. Normally it is the other way around.
   }
-  if ((char)payload[0] == '1') {
+  if ((char)payload[0] == '2') {
+    Serial.println("blue led on");
+    digitalWrite(blueLed, LOW);
+  }
+
+  if ((char)payload[0] == '3') {
+    Serial.println("green led on");
+    digitalWrite(greenLed, LOW);
+  }
+
+  if ((char)payload[0] == '0') {
+    Serial.println("All off");
+    digitalWrite(redLed, HIGH);
+    digitalWrite(blueLed, HIGH);
+    digitalWrite(greenLed, HIGH);
+  }
+
+if ((char)payload[3] == '45') {
+    Serial.println("green led on");
+    digitalWrite(greenLed, LOW);
+  }
+  /*if ((char)payload[0] == '2') {
+    Serial.println("You gave me blue balls");
     digitalWrite(blueled, LOW);
   }
 
-    if ((char)payload[0] == '2') {
-    digitalWrite(greenled, LOW);
-  }
-
     if ((char)payload[0] == '3') {
-    digitalWrite(ledPin, HIGH);
-    digitalWrite(greenled, HIGH);
+      Serial.println("Ahhh much better");
     digitalWrite(blueled, HIGH);
-  }
+    
+  }*/
 }
 
 bool Connect() {
@@ -65,10 +123,14 @@ bool Connect() {
 }
 
 void setup() {
-  pinMode(ledPin, OUTPUT);
+  pinMode(redLed, OUTPUT);
+  pinMode(blueLed, OUTPUT);
+  pinMode(greenLed, OUTPUT);
 
   // Switch the on-board LED off to start with
-  digitalWrite(ledPin, HIGH);
+  digitalWrite(redLed, HIGH);
+  digitalWrite(blueLed, HIGH);
+  digitalWrite(greenLed, HIGH);
 
   // Begin Serial on 115200
   // Remember to choose the correct Baudrate on the Serial monitor!
